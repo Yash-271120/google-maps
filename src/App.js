@@ -23,11 +23,10 @@ const App = () => {
     });
 
     const newObj = {
-      id: Math.floor(Math.random() * 10000000),
       lat: pos.coords.latitude,
       lng: pos.coords.longitude,
     };
-    setMarkers([...markers, newObj]);
+    if(markers.length===0)setMarkers([...markers, newObj]);
   };
   const getCity = async () => {
     if (userLocation.lat && userLocation.lng) {
@@ -35,14 +34,12 @@ const App = () => {
         `https://us1.locationiq.com/v1/reverse.php?key=pk.0f91f6fb49272c5e8c83a755ef63d9b1&lat=${userLocation.lat}&lon=${userLocation.lng}&format=json`
       );
       const data = await res.json();
-      setUserCity(data.address.city);
+      if(data.address)setUserCity(data.address.city);
     }
   };
 
   const clickHandler = (event) => {
-    console.log(event.latLng.lat());
     const newMarker = {
-      id: Math.floor(Math.random() * 10000000),
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
     };
@@ -68,8 +65,6 @@ const App = () => {
     getCity();
     getTemp();
   });
-
-  console.log(userLocation);
   return (
     <div className='App'>
       <div className='whether-container'>
