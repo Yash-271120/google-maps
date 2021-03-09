@@ -62,7 +62,7 @@ const App = () => {
   let date = new Date();
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
-  }, []);
+  });
 
   useEffect(() => {
     getCity();
